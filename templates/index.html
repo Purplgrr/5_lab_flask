@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title> Калькулятор </title>
+        <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+    </head>
+    <body>
+        <form method="post">
+            <p>Известные характеристики трапеции:<br>
+                <label>Основание, Боковые стороны, Высота к основанию
+                    <input 
+                        type=radio 
+                        name=input 
+                        value='1'
+                        {% if input_type == '1' %}
+                            checked="checked"
+                        {% endif %}
+                    />
+                </label>
+                <br>
+                <label>Основание, Прилежащие к основанию углы, Высота к основанию
+                    <input 
+                        type=radio 
+                        name=input 
+                        value='2'
+                        {% if input_type == '2' %}
+                            checked="checked"
+                        {% endif %}
+                    />
+                </label>
+            </p>
+            <p>
+                {% if input_type == '1' %}
+                    <label>
+                        Основание:
+                        <input type="number" min="0" name="base" value="{{base}}" />
+                    </label> <br>
+                    <label>
+                        Первая боковая сторона:
+                        <input type="number" min="0" name="side_a" value="{{side_a}}" />
+                    </label> <br>
+                    <label>
+                        Вторая боковая сторона:
+                        <input type="number" min="0" name="side_b" value="{{side_b}}" />
+                    </label> <br>
+                    <label>
+                        Высота к основанию:
+                        <input type="number" min="0" name="height" value="{{height}}" />
+                    </label>
+                    <div class="image_block">
+                        <img src="/static/images/1st_radio.jpg" />
+                    </div>
+                {% else %}
+                    <label>
+                        Основание:
+                        <input type="number" min="0" name="base" value="{{base}}" />
+                    </label> <br>
+                    <label>
+                        Первый угол (в градусах):
+                        <input type="number" min="0" name="angle_a" value="{{angle_a}}" />
+                    </label> <br>
+                    <label>
+                        Второй угол (в градусах):
+                        <input type="number" min="0" name="angle_b" value="{{angle_b}}" />
+                    </label> <br>
+                    <label>
+                        Высота к основанию:
+                        <input type="number" min="0" name="height" value="{{height}}" />
+                    </label>
+                    <div class="image_block">
+                        <img src="../static/images/2nd_radio.jpg" />
+                    </div>
+                {% endif %}
+            </p>
+            <input type=submit name=show value=Показать /> 
+            <p></p>
+            Операции:<br>
+            {% for i in range(operations|length) %}
+                <label>
+                    {{operations[i]}}
+                    <input 
+                        type="checkbox" 
+                        name="operation" 
+                        value="{{i}}" 
+                        {% if str(i) in operation_list %}
+                            checked="checked"
+                        {% endif %}
+                    />
+                </label> <br>
+            {% endfor %}
+            <input type=submit name=solve value=Решить />
+        </form>
+        <p>
+            {% if result %}
+            Результат:<br>
+            {{result}}
+            {% endif %}
+        </p>
+    </body>
+</html>
